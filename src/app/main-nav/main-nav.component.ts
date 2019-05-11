@@ -24,8 +24,8 @@ export class MainNavComponent implements OnInit {
   }
 
   async logout() {
-    await this.http.logout();
-    if (Response.statusCode === 200) {
+    const resp = await this.http.logout();
+    if (resp.statusCode === 200) {
       localStorage.removeItem('id_token');
       this.router.navigate(['login']);
     }

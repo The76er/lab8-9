@@ -20,7 +20,7 @@ export class CartComponent implements OnInit {
 
   bikes: Array<IBike> = [];
   myName = '';
-  cars: [];
+  cars = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -72,6 +72,11 @@ export class CartComponent implements OnInit {
   }
 
   async removeCar(car: any, index: number) {
-    this.cars.splice(index, 1);
+    const resp = await this.http.delete(`car/id/${car.id}`);
+    if (resp) {
+      this.refresh();
+    } else {
+      this.toastService.showToast('danger', 3000, 'Delete car failed');
+    }
   }
 }
